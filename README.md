@@ -1,0 +1,59 @@
+# Cadastro de carro
+
+**RF**
+Deve ser possível cadastrar um novo carro.
+
+**RN**
+Nao deve ser possível cadastrar um carro com uma placa ja existente.
+Nao deve ser possível alterar a placa de um carro ja cadastrado.
+O carro deve ser cadastrado, por padrao com disponibilidade.
+*O usuário responsável pelo cadastrado deve ser um usuário administrador.
+
+
+# Listagem de carros
+
+**RF**
+Deve ser possível listar todos os carros disponíveis
+Deve ser possível listar todos os carros disponíveis pelo nome da categoria
+Deve ser possível listar todos os carros disponíveis pelo nome da marca
+Deve ser possível listar todos os carros disponíveis pelo nome do carro
+
+**RN**
+O usuário nao precisa estar logado no sistema.
+
+# Cadastro de Especificação no carro
+
+**RF**
+Deve ser possível cadastrar uma especificação para um carro
+Deve ser possível listar todas as especificações.
+deve ser possível listar todos os carros
+
+**RN**
+Nao deve ser possível cadastrar uma especificação para um carro nao cadastrado.
+Nao deve ser possível cadastrar uma especificação ja existente para o mesmo carro.
+O usuário responsável pelo cadastrado deve ser um usuário administrador.
+
+
+# Cadastro de imagens do carro
+
+**RF**
+Deve ser possível  cadastrar a imagem do carro
+Deve ser possível listar todos os carros
+
+**RNF**
+Utilizar o multer para upload dos arquivos
+
+**RN**
+O usuário deve poder cadastrar mais de uma imagem para o mesmo carro 
+O usuário responsável pelo cadastrado deve ser um usuário administrador.
+
+# Aluguel de carro
+
+**RF**
+Deve ser possível cadastrar um aluguel
+
+**RNF**
+**RN**
+O aluguel deve ter duracao minima 24 horas
+Nao deve ser possível cadastrar um novo aluguel caso ja exista um aberto para o mesmo usuário.
+Nao deve ser possível cadastrar um novo aluguel caso ja exista um aberto para o mesmo carro.
