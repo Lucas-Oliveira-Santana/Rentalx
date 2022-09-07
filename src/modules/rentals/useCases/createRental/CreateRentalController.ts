@@ -17,7 +17,7 @@ class CreateRentalController {
             car_id, user_id:id, expected_return_date
         })
 
-        return res.send(201).json(rental)
+        return res.status(201).json(rental)
     }
 }
 

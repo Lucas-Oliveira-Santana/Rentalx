@@ -24,7 +24,7 @@ class Rental{
     expected_return_date:Date;
 
     @Column()
-    total:number
+    total_amount:number
 
     @CreateDateColumn()
     created_at: Date
