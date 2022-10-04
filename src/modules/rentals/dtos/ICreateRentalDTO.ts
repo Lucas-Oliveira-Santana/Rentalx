@@ -11,7 +11,6 @@ interface ICreateRentalDTO{
     id?:string;
 
     end_date?:Date;
-
 }
 
 export{ICreateRentalDTO}

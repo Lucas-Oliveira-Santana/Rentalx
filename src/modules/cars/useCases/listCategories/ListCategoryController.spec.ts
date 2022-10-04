@@ -1,4 +1,4 @@
-import {hash} from 'bcrypt';
+import {hash} from 'bcryptjs';
 import request from 'supertest';
 import {Connection} from 'typeorm';
 import {v4 as uuidV4} from 'uuid';
@@ -30,9 +30,9 @@ describe('create category controller', () => {
     it('should be able to list all categories', async () => {
         const resToken = await request(app)
             .post('/sessions')
-            .send({email: 'admin@rentx.com', password: 'admin'});
+            .send({email: 'admin@rentx.com', password: '1234'});
 
-        const {token} = resToken.body;
+        const {refresh_token} = resToken.body;
 
         await request(app)
             .post('/categories')
@@ -41,7 +41,7 @@ describe('create category controller', () => {
                 description: 'category supertest',
             })
             .set({
-                Authorization: `Bearer ${token}`,
+                Authorization: `Bearer ${refresh_token}`,
             });
 
          const res = await request(app).get("/categories")
