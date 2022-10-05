@@ -30,9 +30,9 @@ describe('create category controller', () => {
     it('should be able to list all categories', async () => {
         const resToken = await request(app)
             .post('/sessions')
-            .send({email: 'admin@rentx.com', password: '1234'});
+            .send({email: 'admin@rentx.com', password: 'admin'});
 
-        const {refresh_token} = resToken.body;
+        const {token} = resToken.body;
 
         await request(app)
             .post('/categories')
@@ -41,7 +41,7 @@ describe('create category controller', () => {
                 description: 'category supertest',
             })
             .set({
-                Authorization: `Bearer ${refresh_token}`,
+                Authorization: `Bearer ${token}`,
             });
 
          const res = await request(app).get("/categories")
