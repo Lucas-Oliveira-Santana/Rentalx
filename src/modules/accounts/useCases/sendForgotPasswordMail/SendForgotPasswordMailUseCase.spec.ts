@@ -1,72 +1,72 @@
-import { UsersRepositoryInMemory } from "@modules/accounts/repositories/in-memory/UsersRepositoryInMemory"
-import { UsersTokensRepositoryInMemory } from "@modules/accounts/repositories/in-memory/UsersTokensRepositoryInMemory"
-import { DayjsDateProvider } from "@shared/container/providers/DateProvider/implementations/DayjsDateProvider"
-import { MailProviderInMemory } from "@shared/container/providers/MailProvider/in-memory/MailProviderInMemory"
-import { AppError } from "@shared/errors/AppError"
-import { SendForgotPasswordMailUseCase } from "./SendForgotPasswordMailUseCase"
+import {UsersRepositoryInMemory} from '@modules/accounts/repositories/in-memory/UsersRepositoryInMemory';
+import {UsersTokensRepositoryInMemory} from '@modules/accounts/repositories/in-memory/UsersTokensRepositoryInMemory';
 
+import {DayJsDateProvider} from '@shared/container/providers/dateProvider/implementations/DayJsDateProvider';
+import {MailProviderInMemory} from '@shared/container/providers/mailProvider/in-memory/MailProviderInMemory';
+import {AppError} from '@shared/errors/AppError';
 
-let sendForgotPasswordMailUseCase: SendForgotPasswordMailUseCase
-let usersRepositoryInMemory: UsersRepositoryInMemory
-let dateProvider: DayjsDateProvider
-let usersTokensRepositoryInMemory: UsersTokensRepositoryInMemory
-let mailProvider: MailProviderInMemory
-describe("Send Forgot Mail", () => {
+import {SendForgotPasswordMailUseCase} from './SendForgotPasswordMailUseCase';
 
+let usersRepositoryInMemory: UsersRepositoryInMemory;
+let usersTokensRepositoryInMemory: UsersTokensRepositoryInMemory;
+let dateProvider: DayJsDateProvider;
+let mailProviderInMemory: MailProviderInMemory;
+let sendForgotPasswordMailUseCase: SendForgotPasswordMailUseCase;
+
+describe('send forgot password mail', () => {
     beforeEach(() => {
-        usersRepositoryInMemory = new UsersRepositoryInMemory()
-        dateProvider = new DayjsDateProvider()
-        usersTokensRepositoryInMemory = new UsersTokensRepositoryInMemory()
-        mailProvider = new MailProviderInMemory()
-
+        mailProviderInMemory = new MailProviderInMemory();
+        dateProvider = new DayJsDateProvider();
+        usersTokensRepositoryInMemory = new UsersTokensRepositoryInMemory();
+        usersRepositoryInMemory = new UsersRepositoryInMemory();
         sendForgotPasswordMailUseCase = new SendForgotPasswordMailUseCase(
             usersRepositoryInMemory,
             usersTokensRepositoryInMemory,
             dateProvider,
-            mailProvider
-        )
+            mailProviderInMemory,
+        );
+    });
 
-    })
+    it('should be able to send a forgot password mail to user', async () => {
+        const sendMail = jest.spyOn(mailProviderInMemory, 'sendMail');
 
+        const user = {
+            name: 'Victor McDaniel',
+            email: 'egaol@gijgu.ci',
+            password: 'kHKj39',
+            driver_license: '1086',
+        };
 
-    it("should be able to send a forgot password mail to user", async() => {
+        await usersRepositoryInMemory.create(user);
 
-        const sendMail = jest.spyOn(mailProvider, "sendMail")
+        await sendForgotPasswordMailUseCase.execute(user.email);
 
+        expect(sendMail).toHaveBeenCalled();
+    });
 
-        await usersRepositoryInMemory.create({
-            driver_license: "535245",
-            email: "puw@gur.mm",
-            name: "Craig Watts",
-            password: "1234",
-
-        })
-
-        await sendForgotPasswordMailUseCase.execute("puw@gur.mm")
-
-        expect(sendMail).toHaveBeenCalled()
-    })
-
-    it("should not be able to send an email if user does not exist", async () => {
+    it('should not be able to send a forgot password mail if user does not exists!', async () => {
         await expect(
-            sendForgotPasswordMailUseCase.
-            execute("enseaj@wo.ke")
-        ).rejects.toEqual(new AppError("User does not exist"))
-    })
+            sendForgotPasswordMailUseCase.execute('pm@feruw.zw'),
+        ).rejects.toEqual(new AppError('User does not exists!'));
+    });
 
-    it("should be able to create an users token",async()=>{
-        const generateTokenMail = jest.spyOn(usersTokensRepositoryInMemory,"create")
+    it('should be able to create user token', async () => {
+        const generateTokenMail = jest.spyOn(
+            usersTokensRepositoryInMemory,
+            'create',
+        );
 
-        usersRepositoryInMemory.create({
-            driver_license: "182225",
-            email: "iva@wes.ro",
-            name: "Mollie Jensen",
-            password: "4321",
+        const user = {
+            name: 'Rena James',
+            email: 'puvdezer@jeljolah.sm',
+            password: 'vwISXu',
+            driver_license: '3438',
+        };
 
-        })
+        await usersRepositoryInMemory.create(user);
 
-        await sendForgotPasswordMailUseCase.execute("iva@wes.ro")
+        await sendForgotPasswordMailUseCase.execute(user.email);
 
-        expect(generateTokenMail).toBeCalled()
-    })
-})
+        expect(generateTokenMail).toHaveBeenCalled();
+    });
+});

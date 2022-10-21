@@ -1,33 +1,61 @@
-import "reflect-metadata"
-import "dotenv/config"
-import express, { NextFunction, Request, Response } from "express";
-import "express-async-errors"
-import createConnection from "@shared/infra/typeorm"
-import"@shared/container"
-import { AppError } from "@shared/errors/AppError";
-import { router } from "./routes";
-import upload from "@config/upload";
+import 'reflect-metadata';
+import upload from '@config/upload';
+import * as Sentry from '@sentry/node';
+import * as Tracing from '@sentry/tracing';
+import cors from 'cors';
+import 'dotenv/config';
+import express, {NextFunction, Request, Response} from 'express';
+import 'express-async-errors';
+import swaggerUi from 'swagger-ui-express';
+
+import '@shared/container';
+import {AppError} from '@shared/errors/AppError';
+
+import swaggerFile from '../../../swagger.json';
+import createConnection from '../typeorm';
+import rateLimiter from './middlewares/rateLimiter';
+import {router} from './routes';
+
+createConnection();
 const app = express();
 
-createConnection()
-app.use(express.json())
+app.use(rateLimiter);
 
-app.use("/avatar",express.static(`${upload.tmpFolder}/avatar`))
-app.use("/cars",express.static(`${upload.tmpFolder}/cars`))
+Sentry.init({
+    dsn: process.env.SENTRY_DSN,
+    integrations: [
+        new Sentry.Integrations.Http({tracing: true}),
+        new Tracing.Integrations.Express({app}),
+    ],
+    tracesSampleRate: 1.0,
+});
 
-app.use(router)
+app.use(Sentry.Handlers.requestHandler());
+app.use(Sentry.Handlers.tracingHandler());
 
-app.use((err:Error, request:Request, response:Response,next:NextFunction)=>{
-    if(err instanceof AppError){
-        return response.status(err.statusCode).json({
-            message: err.message
-        })
+app.use(express.json());
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerFile));
+
+app.use('/avatar', express.static(`${upload.tmpFolder}/avatar`));
+app.use('/cars', express.static(`${upload.tmpFolder}/cars`));
+
+app.use(cors());
+app.use(router);
+
+app.use(Sentry.Handlers.errorHandler());
+
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+    if (err instanceof AppError) {
+        return res.status(err.statusCode).json({
+            message: err.message,
+        });
     }
 
-    return response.status(500).json({
-        status:"error",
-        message:`Internal server error - ${err.message}`
-    })
-})
+    return res.status(500).json({
+        status: 'error',
+        message: `Internal server error - ${err.message}`,
+    });
+});
 
-export {app}
+export {app};

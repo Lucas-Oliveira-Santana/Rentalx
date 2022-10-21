@@ -96,4 +96,4 @@ API de locação de carros
 Observações:
 ***RF*** -> Requisitos funcionais.
 ***RNF*** -> Requisitos não funcionais.
-***RN*** -> Regra de negócio
+***RN*** -> Regra de negócio.

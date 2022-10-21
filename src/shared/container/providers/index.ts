@@ -1,3 +1,3 @@
-import "./DateProvider"
-import "./MailProvider"
-import "./StorageProvider"
+import './dateProvider';
+import './mailProvider';
+import './storageProvider';

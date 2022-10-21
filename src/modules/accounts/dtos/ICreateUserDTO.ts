@@ -1,6 +1,4 @@
-
-
-interface ICreateUserDTO{
+interface ICreateUserDTO {
     name: string;
     email: string;
     password: string;
@@ -9,4 +7,4 @@ interface ICreateUserDTO{
     avatar?: string;
 }
 
-export{ICreateUserDTO}
+export {ICreateUserDTO};

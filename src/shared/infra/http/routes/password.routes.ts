@@ -1,13 +1,15 @@
-import { ResetPasswordUserController } from "@modules/accounts/useCases/resetPasswordUser/ResetPasswordUserController"
-import { SendForgotPasswordMailController } from "@modules/accounts/useCases/sendForgotPasswordMail/SendForgotPasswordMailController"
-import {Router} from "express"
+import {ResetPasswordUserController} from '@modules/accounts/useCases/resetPasswordUser/ResetPasswordUserController';
+import {SendForgotPasswordMailController} from '@modules/accounts/useCases/sendForgotPasswordMail/SendForgotPasswordMailController';
+import {Router} from 'express';
 
-const passwordRoutes = Router()
+const passwordRoutes = Router();
 
-const sendForgotPasswordMailController = new SendForgotPasswordMailController()
-const resetPasswordUserController = new ResetPasswordUserController()
+const sendForgotPasswordMailController = new SendForgotPasswordMailController();
 
-passwordRoutes.post("/forgot",sendForgotPasswordMailController.handle)
-passwordRoutes.post("/reset",resetPasswordUserController.handle)
+const resetPasswordUserController = new ResetPasswordUserController();
 
-export {passwordRoutes}
+passwordRoutes.post('/forgot', sendForgotPasswordMailController.handle);
+
+passwordRoutes.post('/reset', resetPasswordUserController.handle);
+
+export {passwordRoutes};

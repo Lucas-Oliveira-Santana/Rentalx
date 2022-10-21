@@ -1,49 +1,56 @@
-import { AppError } from "@shared/errors/AppError"
-import { CategoriesRepositoryInMemory } from "@modules/cars/repositories/in-memory/CategoriesRepositoryInMemory"
-import { CreateCategoryUseCase } from "./CreateCategoryUseCase"
+import {CategoriesRepositoryInMemory} from '@modules/cars/repositories/in-memory/CategoriesRepositoryInMemory';
 
-let createCategoryUseCase: CreateCategoryUseCase 
-let categoriesRepositoryInMemory: CategoriesRepositoryInMemory
+import {AppError} from '@shared/errors/AppError';
 
-describe("Create Category",()=>{
+import {CreateCategoryUseCase} from './CreateCategoryUseCase';
 
-    beforeEach(()=>{
-        categoriesRepositoryInMemory = new CategoriesRepositoryInMemory();
-        createCategoryUseCase = new CreateCategoryUseCase(categoriesRepositoryInMemory)
-    })
+let categoryRepositoryInMemory: CategoriesRepositoryInMemory;
+let createCategoryUseCase: CreateCategoryUseCase;
 
-    it("should be able to create a new category",async()=>{
-        
+describe('create category', () => {
+    beforeEach(() => {
+        categoryRepositoryInMemory = new CategoriesRepositoryInMemory();
+        createCategoryUseCase = new CreateCategoryUseCase(
+            categoryRepositoryInMemory,
+        );
+    });
+
+    it('should be able to create a new category', async () => {
         const category = {
-            name:"Category Test", 
-            description:"Category Description Test"
-        }
+            name: 'category test',
+            description: 'category description test',
+        };
 
         await createCategoryUseCase.execute({
-            name:category.name,
-            description:category.description
-        })
+            name: category.name,
+            description: category.description,
+        });
 
-        const categoryCreated = await categoriesRepositoryInMemory.findByName(category.name)
+        const categoryCreated = await categoryRepositoryInMemory.findByName(
+            category.name,
+        );
 
-        expect(categoryCreated).toHaveProperty("id")
-    })
+        expect(categoryCreated).toHaveProperty('id');
+    });
 
-    it("should not be able to create a new category with name exists",async()=>{
-        
+    it('should be not able to create a new category that name already exists', async () => {
         const category = {
-            name:"Category Test", 
-            description:"Category Description Test"
-        }
+            name: 'category test',
+            description: 'category description test',
+        };
 
         await createCategoryUseCase.execute({
-            name:category.name,
-            description:category.description
-        })
-        await expect(createCategoryUseCase.execute({
-            name:category.name,
-            description:category.description
-        })
-       ).rejects.toEqual(new AppError("Category Already Exists"))
-    })
-})
+            name: category.name,
+            description: category.description,
+        });
+
+        await expect(
+            createCategoryUseCase.execute({
+                name: category.name,
+                description: category.description,
+            }),
+        ).rejects.toEqual(
+            new AppError(`Category ${category.name} already exists!`),
+        );
+    });
+});

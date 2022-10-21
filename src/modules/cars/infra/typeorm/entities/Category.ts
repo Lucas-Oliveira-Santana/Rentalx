@@ -1,13 +1,10 @@
-import {v4 as uuidV4 } from 'uuid'
-import {Column, CreateDateColumn, Entity, PrimaryColumn} from "typeorm"
+import {Column, CreateDateColumn, Entity, PrimaryColumn} from 'typeorm';
+import {v4 as uuidV4} from 'uuid';
 
-
-@Entity("categories")
-class Category{
-    
+@Entity('categories')
+class Category {
     @PrimaryColumn()
-    id?:string;
-
+    id?: string;
 
     @Column()
     name: string;
@@ -18,12 +15,11 @@ class Category{
     @CreateDateColumn()
     created_at: Date;
 
-
-    constructor(){
-        if(!this.id){
-            this.id = uuidV4()
+    constructor() {
+        if (!this.id) {
+            this.id = uuidV4();
         }
     }
 }
 
-export {Category}
+export {Category};
