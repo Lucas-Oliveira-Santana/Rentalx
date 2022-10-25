@@ -2,7 +2,7 @@
     "name": "rentx",
     "version": "1.0.0",
     "main": "index.js",
-    "repository": "git@github.com:MellPecanha/rentx.git",
+    "repository": "git@https://github.com/Lucas-Oliveira-Santana/Rentalx",
     "author": "Lucas",
     "license": "MIT",
     "scripts": {
