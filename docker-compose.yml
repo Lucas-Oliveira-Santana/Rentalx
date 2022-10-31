@@ -6,10 +6,10 @@ services:
         container_name: database
         restart: always
         ports:
-            - 5432:5432
+            - 6206:5432
         environment:
             - POSTGRES_USER=docker
-            - POSTGRES_PASSWORD=12345
+            - POSTGRES_PASSWORD=ignite
             - POSTGRES_DB=rentx
         volumes:
             - pgdata:/data/postgres
