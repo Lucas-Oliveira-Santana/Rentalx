@@ -1,3 +1,76 @@
+<h1> Rentx, API to rent a car </h1>
+This challenge was developed in Ignite RocketSeat.
+
+
+## Requirements:
+
+Before start, you'l need install: [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) , [NodeJs](https://nodejs.org/en/download/), [Docker](https://docs.docker.com/engine/install/) , [Docker-compose](https://docs.docker.com/compose/install/)
+
+
+
+## Runing Local
+To run the project, follow the next steps:
+
+## Clone Repository
+
+```bash
+ https://github.com/Lucas-Oliveira-Santana/Rentalx.git
+ 
+ cd Rentalx
+```
+
+## Install dependecies 
+```bash
+ npm install
+
+ ```
+
+
+
+## Docker up
+  ```bash
+  sudo docker-compose up -d
+  ```
+
+## Run Migrations
+
+ ```bash
+ npm run typeorm migration:run
+ ```
+ 
+## API Documentation ( Local )
+Once the application is set up, you will be able to access OpenSwagger documentation, all you have to do is browse to http://localhost:3333/api-docs
+
+
+
+## Technologies used
+- [Typescript](https://www.typescriptlang.org/)
+- [Node.js](https://nodejs.org/en/)
+- [Express](https://expressjs.com/)
+- [Docker](https://www.docker.com/), [docker-compose](https://docs.docker.com/compose/)
+- [TypeORM](https://typeorm.io/)
+- [PostgresSQL](https://www.postgresql.org/)
+- [Jest](https://jestjs.io/pt-BR/)
+- [JWT](https://jwt.io/)
+- [bcryptjs](https://www.npmjs.com/package/bcryptjs)
+- [tsyringe](https://www.npmjs.com/package/tsyringe)
+- [dayjs](https://www.npmjs.com/package/dayjs)
+- [multer](https://www.npmjs.com/package/multer)
+- [nodemailer](https://nodemailer.com/about)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # RENTX 🚗
 API de locação de carros
 ***
