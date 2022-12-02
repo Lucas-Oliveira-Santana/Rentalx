@@ -1,5 +1,5 @@
 <h1> Rentx, API to rent a car </h1>
-This challenge was developed in Ignite RocketSeat.
+This API was developed in Ignite RocketSeat.
 
 
 ## Requirements:
